@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: windowWidth,
-    height: 600,
+    height: windowHeight,
     backgroundColor: "tomato"
   },
   map: {
