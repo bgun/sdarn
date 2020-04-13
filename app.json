@@ -1,0 +1,17 @@
+{
+  "name": "sdarn",
+  "displayName": "sdarn",
+  "expo": {
+    "name": "sdarn",
+    "slug": "sdarn",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
