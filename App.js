@@ -23,19 +23,22 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1
+  },
+  search: {
+    position: 'absolute',
+    width: windowWidth-30,
+    height: 50,
+    top: 60,
+    backgroundColor: "white"
   }
 });
 
 const cameraDefaults = {
   centerCoordinate: [-71.05,42.36],
-  zoomLevel: 12
+  zoomLevel: 11
 }
 
 export default class App extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     MapboxGL.setTelemetryEnabled(false);
@@ -47,10 +50,14 @@ export default class App extends Component {
   }
 
   render() {
+    const HOUR = 9;
+    
     let poiSource = getPoiSource();
-    console.log(poiSource);
-    let poiLayer = getPoiLayer('poi11');
-    console.log(poiLayer);
+    console.log(JSON.stringify(poiSource, null, 2));
+
+    let poiLayer = getPoiLayer(HOUR);
+    console.log(JSON.stringify(poiLayer, null, 2));
+
     return (
       <View style={styles.page}>
         <View style={styles.container}>
@@ -58,11 +65,13 @@ export default class App extends Component {
             styleURL={"mapbox://styles/mapbox/dark-v10"}
             rotateEnabled={false}
           >
+            <MapboxGL.VectorSource id="poi" {...poiSource}>
+              <MapboxGL.FillLayer id={"poi"+HOUR} {...poiLayer} />
+            </MapboxGL.VectorSource>
             <MapboxGL.Camera defaultSettings={cameraDefaults} />
-            <MapboxGL.VectorSource id="poi" {...poiSource} />
-            <MapboxGL.FillLayer {...poiLayer} />
           </MapboxGL.MapView>
         </View>
+        <View style={ styles.search } />
       </View>
     );
   }

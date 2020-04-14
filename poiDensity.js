@@ -13,22 +13,22 @@ export const getPoiSource = () => {
 
   return {
     tileUrlTemplates: [`https://10.32.16.108/v1/mvt/t_safegraph_core_pois/{z}/{x}/{y}?${params.toString()}`],
-    maxZoomLevel: 14,
-    minZoomLevel: 5,
+    onPress: (e) => { console.log(`VectorSource onPress: ${e.features}`, e.features) }
   };
 };
 
 /**
  * @returns a Mapbox layer showing POI density at the given hour
  */
-export const getPoiLayer = (layerId) => ({
-  id: layerId,
-  sourceID: 'poi',
-  sourceLayerID: 'poi',
-  minZoomLevel: 5,
-  belowLayerId: 'road-label',
+export const getPoiLayer = (hour) => ({
+  belowLayerID: 'road-label',
+  maxZoomLevel: 5,
   style: {
-    'fillOpacity': 0.9,
-    'fillColor': '#FF00FF'
+    'fillColor': [
+      'interpolate',
+      ['linear'],
+      ['number', ['get', `countsnz${hour}`], 0],
+      ...colors.flat(),
+    ]
   },
 });
